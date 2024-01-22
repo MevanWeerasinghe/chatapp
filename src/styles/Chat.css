@@ -35,6 +35,8 @@
 .messages {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+    margin-top: 55px;
     gap: 10px;
 }
 
@@ -48,6 +50,10 @@
     width: max-content;
     max-width: 450px;
     word-wrap: break-word;
+}
+
+.message:last-child {
+    margin-bottom: 60px;
 }
 
 .message-user {

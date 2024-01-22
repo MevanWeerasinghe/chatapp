@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { addDoc, collection, serverTimestamp, onSnapshot, query, where, orderBy } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import "../styles/Chat.css";
@@ -8,21 +8,23 @@ const Chat = ({room, setRoom}) => {
     const [messages, setMessages] = useState([]);
 
     const messagesRef = collection(db, "messages");
+    const dummyDiv = useRef(null);
 
     useEffect(() => {
         const queryMessage = query(messagesRef, where("room", "==", room), orderBy("createdAt"));
         const unsuscribe = onSnapshot(queryMessage, (snapshot) => {
-            // let messages = [];     ALT
             setMessages([])
             snapshot.forEach((doc) => {
-                // messages.push({...doc.data(), id: doc.id});      ALT
                 setMessages((messages) => [...messages, {...doc.data(), id: doc.id}]);
             });
-            // setMessages(messages);    ALT
         })
 
         return () => unsuscribe();
     }, [])
+
+    useEffect(() => {
+        dummyDiv.current.scrollIntoView({ behavior: "smooth" });
+    }, [messages])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -35,6 +37,7 @@ const Chat = ({room, setRoom}) => {
             room: room
         });
         setMessage("");
+
     }
 
     const oldMessages = messages.map((message) => {
@@ -46,14 +49,25 @@ const Chat = ({room, setRoom}) => {
         )
     })
 
+    const noMessagesStyle = {
+        height: "600px",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+    }
+
+
     return (
         <div className="message-section">
             <div className="room-header">
                 <p className="room-name">Welcome to {room}</p>
                 <button className="leave-button" onClick={() => setRoom(null)}>Leave room</button>
             </div>
-            <div className="messages">
+            <div className="messages" style={messages.length === 0 ? noMessagesStyle : {}}>
+                {messages.length === 0 && <p>There are no messages yet</p>}
                 {oldMessages}
+                <div ref={dummyDiv} style={{height: "40px"}}></div>
             </div>
             <form onSubmit={handleSubmit} className="new-message-form">
                 <input 

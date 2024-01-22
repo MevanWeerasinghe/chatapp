@@ -35,7 +35,10 @@ function App() {
   return (
     <div className="App">
       {room ? (
-          <div><Chat room={room} setRoom={setRoom} /></div>
+          <div>
+            <Chat room={room} setRoom={setRoom} />
+          </div>
+          
         ) : (
           <div className='create-room'>
             <div className='header'>Create a Room</div>
@@ -46,11 +49,11 @@ function App() {
 
         )
       }
-      <br />
+      {/* <br />
       <br />
       <div className='logout'>
         <button onClick={handleLogout}>Logout</button>
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -9,9 +9,7 @@ const Auth = ({setIsAuth}) => {
     const signInWithGoogle = async () => {
         try {
             const result = await signInWithPopup(auth, provider)
-            console.log(result)
             cookies.set('Auth-token', result.user.refreshToken)
-            cookies.set('User-name', result.user.displayName);
             setIsAuth(true);
         }
         catch (error) {
