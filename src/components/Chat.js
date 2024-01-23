@@ -42,7 +42,10 @@ const Chat = ({room, setRoom}) => {
 
     const oldMessages = messages.map((message) => {
         return (
-            <div className="message" key={message.id}>
+            <div 
+                className={`message ${message.user === auth.currentUser.displayName ? "my-message" : ""}`}
+                key={message.id}
+            >
                 <p className="message-user">{message.user}</p>
                 <p className="message-text">{message.text}</p>
             </div>
@@ -55,6 +58,7 @@ const Chat = ({room, setRoom}) => {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
+        color: "#333",
     }
 
 
