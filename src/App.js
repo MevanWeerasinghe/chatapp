@@ -6,6 +6,7 @@ import { useState } from 'react'
 import Navbar from './components/Navbar';
 import Friendchat from './pages/Friendchat';
 import Groupchat from './pages/Groupchat';
+import Chat from './components/Chat';
 // import { signOut } from 'firebase/auth';
 // import { auth } from './firebase-config';
 
@@ -13,6 +14,7 @@ const cookies = new Cookies();
 
 function App() {
   const [isAuth, setIsAuth] = useState(cookies.get('Auth-token'));
+  const [room, setRoom] = useState(null);
   
 
   // const handleLogout = async () => {
@@ -36,14 +38,19 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Navbar />
+      <div className='menu'>
+      <Navbar />
         <Routes>
           <Route index element={<Friendchat />} />
           <Route path='/friend-chat' element={<Friendchat />} />
-          <Route path='/group-chat' element={<Groupchat />} />
+          <Route path='/group-chat' element={<Groupchat setRoom={setRoom}/>} />
         </Routes>
+      </div>
       </BrowserRouter>
-
+      <div className='chat-room'>
+        <Chat room={room} setRoom={setRoom} />
+      </div>
+      
 
       {/* <br />
       <br />

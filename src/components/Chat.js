@@ -13,6 +13,7 @@ const Chat = ({room, setRoom}) => {
     useEffect(() => {
         const queryMessage = query(messagesRef, where("room", "==", room), orderBy("createdAt"));
         const unsuscribe = onSnapshot(queryMessage, (snapshot) => {
+            // console.log(snapshot)
             setMessages([])
             snapshot.forEach((doc) => {
                 setMessages((messages) => [...messages, {...doc.data(), id: doc.id}]);
@@ -20,7 +21,7 @@ const Chat = ({room, setRoom}) => {
         })
 
         return () => unsuscribe();
-    }, [])
+    }, [room])
 
     useEffect(() => {
         dummyDiv.current.scrollIntoView({ behavior: "smooth" });

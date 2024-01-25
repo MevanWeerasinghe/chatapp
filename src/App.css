@@ -1,7 +1,16 @@
 .App {
   display: flex;
   align-items: flex-start;
-  justify-content: space-between;
+  width: 100%;
+  /* justify-content: space-between; */
+}
+
+.menu {
+  width: 35%;
+}
+
+.chat-room {
+  width: 75%;
 }
 
 .create-room {
