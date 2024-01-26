@@ -1,16 +1,30 @@
-import { auth, provider } from '../firebase-config';
+import { addDoc, collection, serverTimestamp, query, where, getDocs } from "firebase/firestore";
+import { auth, provider, db } from '../firebase-config';
 import { signInWithPopup } from "firebase/auth";
 import Cookies from 'universal-cookie' ;
 
 const cookies = new Cookies();
 
 const Auth = ({setIsAuth}) => {
+    const userRef = collection(db, "users");
 
     const signInWithGoogle = async () => {
         try {
             const result = await signInWithPopup(auth, provider)
             cookies.set('Auth-token', result.user.refreshToken)
-            console.log(auth.currentUser.email)
+
+            const email = result.user.email;
+
+            const userQuery = query(collection(db, "users"), where("email", "==", email));
+            const querySnapshot = await getDocs(userQuery);
+
+            if (querySnapshot.empty) {
+                await addDoc(userRef, {
+                    email: result.user.email,
+                    createdAt: serverTimestamp(),
+                    user: result.user.displayName,
+                })
+            }
             setIsAuth(true);
         }
         catch (error) {

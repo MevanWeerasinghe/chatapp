@@ -1,0 +1,63 @@
+.friend-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #0985F7;
+    gap: 10px;
+    width: 100%;
+}
+
+
+.search-friend {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+}
+
+/* Styling for the Search friend input */
+.search-friend-input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    width: 100%;
+    margin: 10px;
+}
+
+/* Styling for the Search friend button */
+.search-friend-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    font-size: 8px;
+    border: none;
+    border-radius: 15px;
+    cursor: pointer;
+    height: 50%;
+    position: absolute;
+    right: 15px;
+}
+
+/* Hover effect for the Search friend button */
+.search-friend-button:hover {
+    background-color: #0056b3;
+}
+
+.friend-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: aqua;
+    margin: 10px;
+}
+
+.friend {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    background-color: #0056b3;
+    border-radius: 5px;
+    width: 100%;
+}

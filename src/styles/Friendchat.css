@@ -34,10 +34,11 @@
 
 .add-friend-form {
     width: 100%;
+    display: flex;
 }
 
 .add-friend-email {
-    width: 70%;
+    width: 50%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -51,4 +52,15 @@
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    margin-left: 5px;
+}
+
+.add-friend-cancel-button {
+    padding: 10px 20px;
+    background-color: #ff1e00;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
 }
