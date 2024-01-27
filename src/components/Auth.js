@@ -15,6 +15,7 @@ const Auth = ({setIsAuth}) => {
 
             const email = result.user.email;
 
+            // Check if the email is already in the database
             const userQuery = query(collection(db, "users"), where("email", "==", email));
             const querySnapshot = await getDocs(userQuery);
 
@@ -23,6 +24,7 @@ const Auth = ({setIsAuth}) => {
                     email: result.user.email,
                     createdAt: serverTimestamp(),
                     user: result.user.displayName,
+                    picture: result.user.photoURL
                 })
             }
             setIsAuth(true);

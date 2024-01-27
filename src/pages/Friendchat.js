@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { addDoc, collection, serverTimestamp, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 
-const FriendChat = () => {
+const FriendChat = ({setCurrentFriend}) => {
 
     const [isClicked, setIsClicked] = useState(false);
     const [friendEmail, setfriendEmail] = useState("")
@@ -12,7 +12,7 @@ const FriendChat = () => {
 
     const userRef = collection(db, "users");
     const friendRef = collection(db, "friends");
-
+    
     const handleClick = async (event) => {
         event.preventDefault();
         setIsClicked(true)
@@ -37,25 +37,24 @@ const FriendChat = () => {
             const userQuery = query(collection(db, "users"), where("email", "==", friendEmail));
             const querySnapshot = await getDocs(userQuery);
 
-            // If the email is not in the database, add it
-            if (querySnapshot.empty) {
-                await addDoc(userRef, {
-                    email: friendEmail,
-                    createdAt: serverTimestamp(),
-                    user: auth.currentUser.displayName,
-                })
+            // If the email is in the database, add it to the friends collection
+            if (!querySnapshot.empty) {
+
+                // Check if the friend is already in the friends collection
+                const friendQuery = query(collection(db, "friends"), where("userEmail", "==", auth.currentUser.email), where("friendEmail", "==", friendEmail));
+                const friendSnapshot = await getDocs(friendQuery);
+
+                // If the friend is not in the friends collection, add it
+                if (friendSnapshot.empty) {
+                    await addDoc(friendRef, {
+                        userEmail: auth.currentUser.email, 
+                        friendEmail: friendEmail,
+                        createdAt: serverTimestamp(),
+                    })
+                }
             }
-
-            // Check if the friend is already in the friends collection
-            const friendQuery = query(collection(db, "friends"), where("friendEmail", "==", friendEmail));
-            const friendSnapshot = await getDocs(friendQuery);
-
-            if (friendSnapshot.empty) {
-                await addDoc(friendRef, {
-                    userEmail: auth.currentUser.email, 
-                    friendEmail: friendEmail,
-                    createdAt: serverTimestamp(),
-                })
+            else {
+                console.log('Email does not exist');
             }
               
         }
@@ -107,7 +106,7 @@ const FriendChat = () => {
                 </form>
             </div>
             }
-            <Friends />
+            <Friends setCurrentFriend={setCurrentFriend} />
         </div>
     );
 };
