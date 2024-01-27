@@ -1,13 +1,19 @@
-import { NavLink } from 'react-router-dom'
 import '../styles/Navbar.css'
 
-const Navbar = () => {
+const Navbar = ({setChatType, handleLogout}) => {
+
     return (
         <nav className="navbar">
             <div className='logo'>Webling</div>
             <ul>
-                <li><NavLink to="/friend-chat">Friends</NavLink></li>
-                <li><NavLink to="/group-chat">Group chat</NavLink></li>
+                <li onClick={() => setChatType("friend-chat")}>Friends</li>
+                <li onClick={() => setChatType("group-chat")}>Group chat</li>
+                <li>Profile</li>
+                <li>      
+                    <div className='logout'>
+                        <button onClick={handleLogout}>Logout</button>
+                    </div>
+                </li>
             </ul>
         </nav>
     );

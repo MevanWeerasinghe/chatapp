@@ -34,14 +34,17 @@ const FriendChat = ({setCurrentFriend}) => {
 
         // Check if the email is already in the database
         try {
-            const userQuery = query(collection(db, "users"), where("email", "==", friendEmail));
+            const userQuery = query(userRef, where("email", "==", friendEmail));
             const querySnapshot = await getDocs(userQuery);
 
             // If the email is in the database, add it to the friends collection
             if (!querySnapshot.empty) {
 
                 // Check if the friend is already in the friends collection
-                const friendQuery = query(collection(db, "friends"), where("userEmail", "==", auth.currentUser.email), where("friendEmail", "==", friendEmail));
+                const friendQuery = query(friendRef, 
+                    where("userEmail", "==", auth.currentUser.email), 
+                    where("friendEmail", "==", friendEmail)
+                );
                 const friendSnapshot = await getDocs(friendQuery);
 
                 // If the friend is not in the friends collection, add it

@@ -23,7 +23,7 @@ const Friends = ({setCurrentFriend}) => {
                     // Only perform the query if emails array is not empty
                     if (emails.length > 0) {
                         // Query the users collection for documents where the email field is in the emails array
-                        const userQuery = query(collection(db, "users"), where("email", "in", emails));
+                        const userQuery = query(userRef, where("email", "in", emails));
                         const userSnapshot = await getDocs(userQuery);
 
                         // Create a map of emails to names and pictures

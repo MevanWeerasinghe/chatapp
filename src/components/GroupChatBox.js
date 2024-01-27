@@ -14,10 +14,11 @@ const GroupChatBox = ({room, setRoom}) => {
         const queryMessage = query(messagesRef, where("room", "==", room), orderBy("createdAt"));
         const unsuscribe = onSnapshot(queryMessage, (snapshot) => {
             // console.log(snapshot)
-            setMessages([])
+            const newMessages = [];
             snapshot.forEach((doc) => {
-                setMessages((messages) => [...messages, {...doc.data(), id: doc.id}]);
+                newMessages.push({...doc.data(), id: doc.id});
             });
+            setMessages(newMessages);
         })
 
         return () => unsuscribe();
