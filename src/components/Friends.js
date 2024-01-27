@@ -15,7 +15,9 @@ const Friends = ({setCurrentFriend}) => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
-                const queryFriends = query(friendsRef, where("userEmail", "==", user.email));
+                const queryFriends = query(friendsRef, 
+                    where("userEmail", "==", user.email)
+                );
                 const unsubscribeSnapshot = onSnapshot(queryFriends, async (snapshot) => {
                     // Get all the friends' emails
                     const emails = snapshot.docs.map(doc => doc.data().friendEmail);
@@ -48,7 +50,7 @@ const Friends = ({setCurrentFriend}) => {
         return () => unsubscribe();
     }, [])
 
-    //
+    // i change new try
 
     const allFriends = friends.map((friend) => {
 
