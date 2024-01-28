@@ -52,6 +52,8 @@ const FriendChat = ({setCurrentFriend}) => {
                         Emails: [auth.currentUser.email, friendEmail],  // change
                         state: "pending",  // change
                         createdAt: serverTimestamp(),
+                        sender: auth.currentUser.email,
+                        lastMessage: {},
                     })
                 }
             }

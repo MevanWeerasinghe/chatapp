@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import { addDoc, collection, serverTimestamp, onSnapshot, query, where, orderBy } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp, onSnapshot, query, where, orderBy, getDocs, updateDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import "../styles/Chat.css";
 
@@ -9,6 +9,7 @@ const FriendChatBox = ({currentFriend}) => {
     const [messages, setMessages] = useState([]);
 
     const messagesRef = collection(db, "friendMessages");
+    const friendRef = collection(db, "friends");
     const dummyDiv = useRef(null);
 
     useEffect(() => {
@@ -45,6 +46,21 @@ const FriendChatBox = ({currentFriend}) => {
             senderName: auth.currentUser.displayName,
             sender: auth.currentUser.email,
             reciever: currentFriend.friendEmail,
+        });
+
+        // Update the last message in the friends collection
+        const friendQuery = query(friendRef, 
+            where("Emails", "array-contains-any", [auth.currentUser.email, currentFriend.friendEmail]),
+        );
+        const friendSnapshot = await getDocs(friendQuery);
+        const friendDoc = friendSnapshot.docs[0];
+        const friendDocRef = doc(db, "friends", friendDoc.id);
+        await updateDoc(friendDocRef, {
+            lastMessage: {
+                text: message,
+                createdAt: serverTimestamp(),
+                sender: auth.currentUser.email,
+            }
         });
 
         setMessage("");

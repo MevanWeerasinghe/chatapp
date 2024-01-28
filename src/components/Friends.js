@@ -1,6 +1,6 @@
 import "../styles/Friends.css";
 import { useEffect, useState, useRef } from "react";
-import { collection, onSnapshot, query, where, getDocs } from "firebase/firestore";
+import { collection, onSnapshot, query, where, getDocs, doc, updateDoc,deleteDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 
 const Friends = ({setCurrentFriend}) => {
@@ -15,14 +15,11 @@ const Friends = ({setCurrentFriend}) => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
-
-                console.log(user.email);
                 // Query the friends collection for documents where the Emails field contains the user's email
                 const queryFriends = query(friendsRef, 
-                    where("Emails", "in", [user.email])
+                    where("Emails", "array-contains", user.email)
                 );
                 const unsubscribeSnapshot = onSnapshot(queryFriends, async (snapshot) => {
-                    console.log(snapshot.docs);
                     // Get all the emails from the friends collection
                     const emails = snapshot.docs
                         .map(doc => doc.data().Emails)
@@ -46,14 +43,13 @@ const Friends = ({setCurrentFriend}) => {
                             const data = doc.data();
                             const friendEmail = data.Emails.filter(email => email !== user.email)[0];
                             const {name, picture} = emailToNameAndPicture[friendEmail] || {};
-                            return {...data, name, picture, id: doc.id};
+                            return {...data, name, picture, friendEmail:friendEmail, id: doc.id};
                         }));
                     }
                 })
                 return () => unsubscribeSnapshot();
             }
         });
-    
         return () => unsubscribe();
     }, [])
 
@@ -66,13 +62,37 @@ const Friends = ({setCurrentFriend}) => {
             setSelectedFriend(friend.id);
         }
 
+        const handleAccept = async () => {
+            const friendDocRef = doc(db, "friends", friend.id); // create a reference to the document
+            await updateDoc(friendDocRef, {
+                state: "accepted"
+            });
+            friend.state = "accepted";
+        }
+
+        const handleReject = async () => {
+            const friendDocRef = doc(db, "friends", friend.id); // create a reference to the document
+            await deleteDoc(friendDocRef);
+        }
+
         return (
-            <div className={`friend ${selectedFriend === friend.id ? "clicked" : "" }`} key={friend.id} onClick={handleFriendClick}>
+
+            <div 
+                className={`friend ${selectedFriend === friend.id ? "clicked" : "" }`} 
+                key={friend.id} 
+                onClick={handleFriendClick}
+            >
                 <div className="friend-avatar">Add DP</div>
                 <div className="friend-info">
                     <p className="friend-name">{friend.name}</p>
                     <p className="friend-email">{friend.friendEmail}</p>
                 </div>
+                {(friend.state === "pending" && friend.sender !== auth.currentUser.email) ? (
+                    <div className="friend-request">
+                        <button className="friend-state" onClick={handleAccept}>Accept</button>
+                        <button className="friend-state" onClick={handleReject}>Reject</button>
+                    </div>
+                ) : null}
             </div>
         )
     })
