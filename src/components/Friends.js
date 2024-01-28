@@ -15,14 +15,20 @@ const Friends = ({setCurrentFriend}) => {
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (user) {
+
+                console.log(user.email);
+                // Query the friends collection for documents where the Emails field contains the user's email
                 const queryFriends = query(friendsRef, 
-                    where("userEmail", "==", user.email)
+                    where("Emails", "in", [user.email])
                 );
                 const unsubscribeSnapshot = onSnapshot(queryFriends, async (snapshot) => {
-                    // Get all the friends' emails
-                    const emails = snapshot.docs.map(doc => doc.data().friendEmail);
-    
-                    // Only perform the query if emails array is not empty
+                    console.log(snapshot.docs);
+                    // Get all the emails from the friends collection
+                    const emails = snapshot.docs
+                        .map(doc => doc.data().Emails)
+                        .flat() // Flatten the array of arrays
+                        .filter(email => email !== user.email); 
+                    
                     if (emails.length > 0) {
                         // Query the users collection for documents where the email field is in the emails array
                         const userQuery = query(userRef, where("email", "in", emails));
@@ -38,7 +44,8 @@ const Friends = ({setCurrentFriend}) => {
                         // Add the friends' data and the users' names and pictures to the friends state
                         setFriends(snapshot.docs.map(doc => {
                             const data = doc.data();
-                            const {name, picture} = emailToNameAndPicture[data.friendEmail] || {};
+                            const friendEmail = data.Emails.filter(email => email !== user.email)[0];
+                            const {name, picture} = emailToNameAndPicture[friendEmail] || {};
                             return {...data, name, picture, id: doc.id};
                         }));
                     }

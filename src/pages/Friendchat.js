@@ -42,16 +42,15 @@ const FriendChat = ({setCurrentFriend}) => {
 
                 // Check if the friend is already in the friends collection
                 const friendQuery = query(friendRef, 
-                    where("userEmail", "==", auth.currentUser.email), 
-                    where("friendEmail", "==", friendEmail)
+                    where("Emails", "in", [friendEmail]),
                 );
                 const friendSnapshot = await getDocs(friendQuery);
 
                 // If the friend is not in the friends collection, add it
                 if (friendSnapshot.empty) {
                     await addDoc(friendRef, {
-                        userEmail: auth.currentUser.email, 
-                        friendEmail: friendEmail,
+                        Emails: [auth.currentUser.email, friendEmail],  // change
+                        state: "pending",  // change
                         createdAt: serverTimestamp(),
                     })
                 }
