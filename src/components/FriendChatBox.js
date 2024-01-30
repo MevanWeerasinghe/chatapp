@@ -39,6 +39,8 @@ const FriendChatBox = ({currentFriend}) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         if (message === "") return;
+
+        console.log(auth.currentUser.email, currentFriend.friendEmail);
     
         await addDoc(messagesRef, {
             text: message,
@@ -53,7 +55,14 @@ const FriendChatBox = ({currentFriend}) => {
             where("Emails", "array-contains-any", [auth.currentUser.email, currentFriend.friendEmail]),
         );
         const friendSnapshot = await getDocs(friendQuery);
-        const friendDoc = friendSnapshot.docs[0];
+
+        //Filter the documents to find the one that contains both emails
+        const friendDoc = friendSnapshot.docs.filter(doc => 
+            doc.data().Emails.includes(auth.currentUser.email) && 
+            doc.data().Emails.includes(currentFriend.friendEmail)
+        )[0];
+        
+        // Update the last message in the friends collection
         const friendDocRef = doc(db, "friends", friendDoc.id);
         await updateDoc(friendDocRef, {
             lastMessage: {

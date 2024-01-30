@@ -2,15 +2,21 @@
   display: flex;
   align-items: flex-start;
   width: 100%;
+  height: 100vh;
   /* justify-content: space-between; */
 }
 
 .menu {
   width: 35%;
+  min-width: 400px;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .chat-room {
   width: 75%;
+  height: 100vh;
+  overflow-y: auto;
 }
 
 .create-room {

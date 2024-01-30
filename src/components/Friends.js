@@ -2,6 +2,7 @@ import "../styles/Friends.css";
 import { useEffect, useState, useRef } from "react";
 import { collection, onSnapshot, query, where, getDocs, doc, updateDoc,deleteDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
+import searchIcon from "../icon/icons8-search-50.png"
 
 const Friends = ({setCurrentFriend}) => {
 
@@ -76,7 +77,6 @@ const Friends = ({setCurrentFriend}) => {
         }
 
         return (
-
             <div 
                 className={`friend ${selectedFriend === friend.id ? "clicked" : "" }`} 
                 key={friend.id} 
@@ -86,11 +86,15 @@ const Friends = ({setCurrentFriend}) => {
                 <div className="friend-info">
                     <p className="friend-name">{friend.name}</p>
                     <p className="friend-email">{friend.friendEmail}</p>
+                    <p className="friend-last-message">{friend.lastMessage.text}</p>
                 </div>
                 {(friend.state === "pending" && friend.sender !== auth.currentUser.email) ? (
                     <div className="friend-request">
-                        <button className="friend-state" onClick={handleAccept}>Accept</button>
-                        <button className="friend-state" onClick={handleReject}>Reject</button>
+                        <p className="friend-request-text">Friend Request</p>
+                        <div className="friend-request-buttons">
+                            <button className="friend-request-accept-button" onClick={handleAccept}>Accept</button>
+                            <button className="friend-request-reject-button" onClick={handleReject}>Reject</button>
+                        </div>
                     </div>
                 ) : null}
             </div>
@@ -98,12 +102,16 @@ const Friends = ({setCurrentFriend}) => {
     })
 
     return (
-        <div className="friend-list">
+        <div className="friend-list-sec">
             <div className="search-friend">
-                <input type="text" className="search-friend-input" placeholder="search friend here" />
-                <button className="search-friend-button">Search</button>
+                <div className="type-area">
+                    <input type="text" className="search-friend-input" placeholder="search friend here" />
+                    <button className="search-friend-button"><img className="search-icon" src={searchIcon} /></button>
+                </div>
             </div>
-            {allFriends}
+            <div className="friend-list">
+                {allFriends}
+            </div>
         </div>
     )
 }

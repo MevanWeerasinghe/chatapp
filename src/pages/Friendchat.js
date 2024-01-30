@@ -72,7 +72,7 @@ const FriendChat = ({setCurrentFriend}) => {
     }
 
     return (
-        <div>
+        <div className='sub-menu'>
             <div onClick={handleClick} className={`add-friend ${isClicked ? "clicked" : ""}`}>
                 {!validEmail ? (
                     <div><p className='invalid-email'>Invalid Email Address</p></div>

@@ -3,5 +3,24 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    background-color: blanchedalmond;
+    height: 60px;
+    background-color: #003c70;
+    position: sticky;
+    top: 0;
+}
+
+.icon-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.icons {
+    height: 20px;
+    margin: 0 10px 0 10px;
+}
+
+li {
+    list-style: none;
 }

@@ -1,20 +1,28 @@
-.friend-list {
+.friend-list-sec {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
     background-color: #0985F7;
-    gap: 10px;
     width: 100%;
+    height: 100%;
 }
-
 
 .search-friend {
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
     width: 100%;
+}
+
+.type-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 80%;
+    margin: 10px;
+    background-color: #d2e8ff;
+    border-radius: 20px;
 }
 
 /* Styling for the Search friend input */
@@ -23,26 +31,37 @@
     border: 1px solid #ccc;
     border-radius: 20px;
     width: 100%;
-    margin: 10px;
 }
 
 /* Styling for the Search friend button */
 .search-friend-button {
-    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: #007bff;
-    color: #fff;
-    font-size: 8px;
     border: none;
     border-radius: 15px;
     cursor: pointer;
-    height: 50%;
-    position: absolute;
-    right: 15px;
+    height: 30px;
+    width: 30px;
+    margin: 5px;
+}
+
+.search-icon {
+    height: 20px;
 }
 
 /* Hover effect for the Search friend button */
 .search-friend-button:hover {
     background-color: #0056b3;
+}
+
+.friend-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 98%;
+    gap: 5px;
 }
 
 .friend {
@@ -71,7 +90,7 @@
     height: 50px;
     border-radius: 50%;
     background-color: aqua;
-    margin: 10px;
+    margin: 10px 15px 10px 15px;
 }
 
 .friend-info {
@@ -83,13 +102,57 @@
     padding: 0;
     background-color: transparent;
     color: #b5d5f7;
-    margin-bottom: 6px;
+    margin-bottom: 0;
 }
 
 .friend-email {
     font-size: 12px;
     padding: 0;
     background-color: transparent;
-    color: #b5d5f7;
-    margin-top: 6px;
+    color: #92c2f7;
+    margin: 0 0 4px 0;
+}
+
+.friend-last-message {
+    font-size: 12px;
+    padding: 0;
+    background-color: transparent;
+    color: #d2e8ff;
+    margin-top: 4px;
+}
+
+.friend-request {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.friend-request-text {
+    font-size: 12px;
+    padding: 0;
+    background-color: transparent;
+    color: #d2e8ff;
+    margin: 0 0 4px 0;
+}
+
+.friend-request-accept-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.friend-request-reject-button {
+    padding: 10px 20px;
+    background-color: #ff1e00;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 5px;
 }
