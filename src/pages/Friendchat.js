@@ -49,11 +49,16 @@ const FriendChat = ({setCurrentFriend}) => {
                 // If the friend is not in the friends collection, add it
                 if (friendSnapshot.empty) {
                     await addDoc(friendRef, {
-                        Emails: [auth.currentUser.email, friendEmail],  // change
-                        state: "pending",  // change
+                        Emails: [auth.currentUser.email, friendEmail],
+                        state: "pending",
                         createdAt: serverTimestamp(),
                         sender: auth.currentUser.email,
-                        lastMessage: {},
+                        lastMessage: {
+                            text: "",
+                            createdAt: serverTimestamp(),
+                            sender: "",
+                            seen: false,
+                        }
                     })
                 }
             }
@@ -106,7 +111,6 @@ const FriendChat = ({setCurrentFriend}) => {
                             </button>
                         </div>
                     )}
-                    
                 </form>
             </div>
             }

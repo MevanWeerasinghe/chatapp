@@ -40,7 +40,7 @@ const FriendChatBox = ({currentFriend}) => {
         event.preventDefault();
         if (message === "") return;
 
-        console.log(auth.currentUser.email, currentFriend.friendEmail);
+        console.log(currentFriend);
     
         await addDoc(messagesRef, {
             text: message,
@@ -69,6 +69,7 @@ const FriendChatBox = ({currentFriend}) => {
                 text: message,
                 createdAt: serverTimestamp(),
                 sender: auth.currentUser.email,
+                seen: false
             }
         });
 
