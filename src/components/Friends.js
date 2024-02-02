@@ -1,14 +1,13 @@
 import "../styles/Friends.css";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState} from "react";
 import { collection, onSnapshot, query, where, getDocs, doc, updateDoc,deleteDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
-import searchIcon from "../icon/icons8-search-50.png"
+import SearchFriend from "./SearchFriend";
 
 const Friends = ({setCurrentFriend}) => {
 
     const friendsRef = collection(db, "friends");
-    const userRef = collection(db, "users");
-    // const searchRef = useRef("");
+    const userRef = collection(db, "users"); 
 
     const [friends, setFriends] = useState([]);
     const [selectedFriend, setSelectedFriend] = useState(null);
@@ -85,8 +84,6 @@ const Friends = ({setCurrentFriend}) => {
                     seen: true
                 }
             });
-
-            console.log(friend);
         }
 
         const handleAccept = async () => {
@@ -122,7 +119,7 @@ const Friends = ({setCurrentFriend}) => {
                             )
                         )}
 
-                        <div className="friend-lastMessage-time">{date.toLocaleTimeString()}</div>
+                        <div className="friend-lastMessage-time">{date ? date.toLocaleTimeString() : ""}</div>
                     </div>
                 ) : null}
                 
@@ -147,12 +144,7 @@ const Friends = ({setCurrentFriend}) => {
 
     return (
         <div className="friend-list-sec">
-            <div className="search-friend">
-                <div className="type-area">
-                    <input type="text" className="search-friend-input" placeholder="search friend here" />
-                    <button className="search-friend-button"><img className="search-icon" src={searchIcon} /></button>
-                </div>
-            </div>
+            <SearchFriend friends={friends} setFriends={setFriends} />
             <div className="friend-list">
                 {allFriends}
             </div>

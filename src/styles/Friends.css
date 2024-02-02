@@ -8,54 +8,6 @@
     height: 100%;
 }
 
-.search-friend {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-}
-
-.type-area {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 80%;
-    margin: 10px;
-    background-color: #d2e8ff;
-    border-radius: 20px;
-}
-
-/* Styling for the Search friend input */
-.search-friend-input {
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 20px;
-    width: 100%;
-}
-
-/* Styling for the Search friend button */
-.search-friend-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: #007bff;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
-    height: 30px;
-    width: 30px;
-    margin: 5px;
-}
-
-.search-icon {
-    height: 20px;
-}
-
-/* Hover effect for the Search friend button */
-.search-friend-button:hover {
-    background-color: #0056b3;
-}
-
 .friend-list {
     display: flex;
     flex-direction: column;
