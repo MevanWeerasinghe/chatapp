@@ -40,7 +40,7 @@ const FriendChatBox = ({currentFriend}) => {
         event.preventDefault();
         if (message === "") return;
 
-        console.log(currentFriend);
+        // console.log(currentFriend);
     
         await addDoc(messagesRef, {
             text: message,

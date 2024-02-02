@@ -85,6 +85,8 @@ const Friends = ({setCurrentFriend}) => {
                     seen: true
                 }
             });
+
+            console.log(friend);
         }
 
         const handleAccept = async () => {
@@ -114,9 +116,11 @@ const Friends = ({setCurrentFriend}) => {
                 </div>
                 {friend.state === "accepted" ? (
                     <div className="message-count-sec">
-                        {friend.sender !== auth.currentUser.email ? (
-                            friend.lastMessage.seen ? null : <div className="new-message-dot">0</div>
-                        ) : null}
+                        {friend.lastMessage.sender === auth.currentUser.email ? null : (
+                            selectedFriend === friend.id ? null : (
+                                friend.lastMessage.seen ? null : <div className="new-message-dot"></div>
+                            )
+                        )}
 
                         <div className="friend-lastMessage-time">{date.toLocaleTimeString()}</div>
                     </div>
