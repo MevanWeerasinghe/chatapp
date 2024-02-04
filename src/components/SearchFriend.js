@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const SearchFriend = ({friends, setFriends}) => {
 
-    const [allFriends, setAllFriends] = useState(friends)
+    const [allFriends, setAllFriends] = useState(null)
     const [searchPhrase, setSearchPhrase] = useState("")
     const [isClicked, setIsClicked] = useState(false)
 
@@ -15,7 +15,8 @@ const SearchFriend = ({friends, setFriends}) => {
 
     const handleSearch = () => {
         console.log(searchPhrase);
-        const matchingFriends = friends.filter(friend => friend.name.includes(searchPhrase));
+        const matchingFriends = friends.filter(friend => friend.name.toLowerCase().includes(searchPhrase.toLowerCase()));
+        setAllFriends(friends);
         setFriends(matchingFriends);
         setIsClicked(true);
     }

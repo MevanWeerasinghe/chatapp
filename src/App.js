@@ -7,6 +7,7 @@ import Friendchat from './pages/Friendchat';
 import Groupchat from './pages/Groupchat';
 import GroupChatBox from './components/GroupChatBox';
 import FriendChatBox from './components/FriendChatBox';
+import FriendStartPage from './components/FriendStartPage';
 import { signOut } from 'firebase/auth';
 import { auth } from './firebase-config';
 
@@ -15,7 +16,7 @@ const cookies = new Cookies();
 function App() {
   const [isAuth, setIsAuth] = useState(cookies.get('Auth-token'));
   const [chatType, setChatType] = useState('friend-chat');
-  const [currentFriend, setCurrentFriend] = useState({});
+  const [currentFriend, setCurrentFriend] = useState('none');
   const [room, setRoom] = useState(null);
 
   const handleLogout = async () => {
@@ -51,7 +52,11 @@ function App() {
         {chatType === 'group-chat' ? (
           <GroupChatBox room={room} setRoom={setRoom} />
         ) : (
-          <FriendChatBox currentFriend={currentFriend} />
+          currentFriend === 'none' ? (
+            <FriendStartPage />
+          ) : (
+            <FriendChatBox currentFriend={currentFriend} />
+          )
         )}
       </div>
     </div>
