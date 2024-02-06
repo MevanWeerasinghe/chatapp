@@ -1,13 +1,13 @@
 import '../styles/AddFriend.css';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { addDoc, collection, serverTimestamp, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 
-const AddFriend = () => {
+const AddFriend = ({isClicked, setIsClicked}) => {
 
-    const [isClicked, setIsClicked] = useState(false);
     const [friendEmail, setfriendEmail] = useState("")
     const [validEmail, setValidEmail] = useState(true)
+    const addFriendInnerlineRef = useRef();
 
     const userRef = collection(db, "users");
     const friendRef = collection(db, "friends");
@@ -75,44 +75,54 @@ const AddFriend = () => {
         setfriendEmail("")
     }
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (addFriendInnerlineRef.current && !addFriendInnerlineRef.current.contains(event.target)) {
+                setIsClicked(false) 
+            }
+        }
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
         <div className='add-friend-sec'>
-            <div className='add-friend-innerline'>
+            <div className='add-friend-innerline' ref={addFriendInnerlineRef} >
                 <div onClick={handleClick} className={`add-friend ${isClicked ? "clicked" : ""}`}>
                     {!validEmail ? (
                         <div><p className='invalid-email'>Invalid Email Address</p></div>
-                    ) : "+ Add a Friend"}
+                    ) : <p className='add-friend-label'>+ Add a Friend</p>}
                 </div>
                 {isClicked && 
-                <div className='add-friend-overlay'>
-                    <form className='add-friend-form' onSubmit={handleSubmit}>
-                        <input 
-                            type='text' 
-                            className='add-friend-email' 
-                            placeholder='Enter email of your friend' 
-                            onChange={(evet) => setfriendEmail(evet.target.value)}
-                            value={friendEmail}
-                        />
-                        { validEmail ? (
-                            <div>
-                                <button className='add-friend-email-button' type="submit">Add</button>
-                                <button className='add-friend-cancel-button' onClick={() => setIsClicked(false)}>Cancel</button>
-                            </div>
-                        ) : (
-                            <div>
-                                <button 
-                                    className='add-friend-cancel-button'
-                                    onClick={() => {
-                                        setValidEmail(true);
-                                        setfriendEmail("");
-                                    }}
-                                >
-                                    Cancel
-                                </button>
-                            </div>
-                        )}
-                    </form>
-                </div>
+                <form className='add-friend-form' onSubmit={handleSubmit}>
+                    <input 
+                        type='text' 
+                        className='add-friend-email' 
+                        placeholder='Enter email of your friend' 
+                        onChange={(evet) => setfriendEmail(evet.target.value)}
+                        value={friendEmail}
+                    />
+                    { validEmail ? (
+                        <div>
+                            <button className='add-friend-email-button' type="submit">Add</button>
+                        </div>
+                    ) : (
+                        <div>
+                            <button 
+                                className='add-friend-cancel-button'
+                                onClick={() => {
+                                    setValidEmail(true);
+                                    setfriendEmail("");
+                                }}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    )}
+                </form>
                 }
             </div>
         </div>

@@ -4,7 +4,7 @@ import { collection, onSnapshot, query, where, getDocs, doc, updateDoc,deleteDoc
 import { auth, db } from "../firebase-config";
 import SearchFriend from "./SearchFriend";
 
-const Friends = ({setCurrentFriend}) => {
+const Friends = ({setCurrentFriend, isClicked}) => {
 
     const friendsRef = collection(db, "friends");
     const userRef = collection(db, "users"); 
@@ -144,25 +144,9 @@ const Friends = ({setCurrentFriend}) => {
 
     return (
         <div className="friend-list-sec">
-            <SearchFriend friends={friends} setFriends={setFriends} />
+            <SearchFriend friends={friends} setFriends={setFriends} isClicked={isClicked} />
             <div className="friend-list">
                 {allFriends}
-                <div>test1</div>
-                <div>test2</div>
-                <div>test3</div>
-                <div>test4</div>
-                <div>test5</div>
-                <div>test6</div>
-                <div>test7</div>
-                <div>test8</div>
-                <div>test9</div>
-                <div>test10</div>
-                <div>test11</div>
-                <div>test12</div>
-                <div>test13</div>
-                <div>test14</div>
-                <div>test15</div>
-                <div>test16</div>
             </div>
         </div>
     )
