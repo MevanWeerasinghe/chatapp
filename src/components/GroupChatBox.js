@@ -7,13 +7,12 @@ const GroupChatBox = ({room, setRoom}) => {
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
 
-    const messagesRef = collection(db, "messages");
+    const messagesRef = collection(db, "groupsMessages");
     const dummyDiv = useRef(null);
 
     useEffect(() => {
         const queryMessage = query(messagesRef, where("room", "==", room), orderBy("createdAt"));
         const unsuscribe = onSnapshot(queryMessage, (snapshot) => {
-            // console.log(snapshot)
             const newMessages = [];
             snapshot.forEach((doc) => {
                 newMessages.push({...doc.data(), id: doc.id});

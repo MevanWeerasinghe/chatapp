@@ -1,8 +1,10 @@
 import '../styles/Groupchat.css'
-import Creategroupchat from '../components/Creategroupchat';
+import CreateGroupChat from '../components/CreateGroupChat';
+import JoinGroupChat from '../components/JoinGroupChat';
 import { useState, useRef, useEffect} from 'react';
+import Groups from '../components/Groups';
 
-const Groupchat = ({setRoom}) => {
+const Groupchat = ({room, setRoom}) => {
 
     const [createGroupClicked, setCreateGroupClicked] = useState(false)
     const [joinGroupClicked, setJoinGroupClicked] = useState(false)
@@ -34,7 +36,7 @@ const Groupchat = ({setRoom}) => {
                     ref={createGroupChatRef}
                 >
                     <div>Create a Group Chat</div>
-                    {createGroupClicked && <Creategroupchat setRoom={setRoom} />}
+                    {createGroupClicked && <CreateGroupChat setRoom={setRoom} />}
                 </div>
                 <div 
                     className='join-group-chat-sec'
@@ -42,9 +44,10 @@ const Groupchat = ({setRoom}) => {
                     ref={joinGroupChatRef}
                 >
                     <div>Join a Group Chat</div>
-                    {joinGroupClicked && <Creategroupchat setRoom={setRoom} />}
+                    {joinGroupClicked && <JoinGroupChat setRoom={setRoom} />}
                 </div>
             </div>
+            <Groups room={room} />
         </div>
     )
 }

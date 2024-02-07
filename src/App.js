@@ -44,7 +44,7 @@ function App() {
         {chatType === 'friend-chat' ? (
           <Friendchat setCurrentFriend={setCurrentFriend} />
         ) : (
-          <Groupchat setRoom={setRoom} />
+          <Groupchat room={room} setRoom={setRoom} />
         )}
 
       </div>
