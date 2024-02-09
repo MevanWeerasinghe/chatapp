@@ -35,7 +35,7 @@ const Groupchat = ({room, setRoom}) => {
                     onClick={() => setCreateGroupClicked(true)}
                     ref={createGroupChatRef}
                 >
-                    <div>Create a Group Chat</div>
+                    <div className='labels'>Create a Group Chat</div>
                     {createGroupClicked && <CreateGroupChat setRoom={setRoom} />}
                 </div>
                 <div 
@@ -43,11 +43,11 @@ const Groupchat = ({room, setRoom}) => {
                     onClick={() => setJoinGroupClicked(true)}
                     ref={joinGroupChatRef}
                 >
-                    <div>Join a Group Chat</div>
+                    <div className='labels'>Join a Group Chat</div>
                     {joinGroupClicked && <JoinGroupChat setRoom={setRoom} />}
                 </div>
             </div>
-            <Groups room={room} />
+            <Groups room={room} setRoom={setRoom} />
         </div>
     )
 }

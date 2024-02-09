@@ -32,6 +32,11 @@ const CreateGroupChat = ({ setRoom }) => {
         }  
     }
 
+    const errorStyle = {
+        PointerEvents: "none",
+        backgroundColor: "#ffcccc",
+    }
+
     return (
         <div className='create-room-sec'>
             {!roomExists ? (
@@ -45,6 +50,8 @@ const CreateGroupChat = ({ setRoom }) => {
                     type='text' 
                     ref={roomRef} 
                     placeholder='Enter group chat Name' 
+                    readOnly={roomExists}
+                    style={roomExists ? errorStyle : {}}
                 />
                 {!roomExists ? (
                     <button className='room-name-input-button' onClick={handleClick}>
