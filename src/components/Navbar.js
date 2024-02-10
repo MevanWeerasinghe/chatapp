@@ -3,6 +3,7 @@ import friend from '../icon/icons8-person-30.png'
 import group from '../icon/icons8-group-30.png'
 import profile from '../icon/icons8-male-user-48.png'
 import menu from '../icon/icons8-menu-vertical-30.png'
+import Logo from '../icon/Webling2.png'
 import PopUpMenu from './PopUpMenu'
 import { useState } from 'react'
 
@@ -17,7 +18,7 @@ const Navbar = ({setChatType, handleLogout}) => {
 
     return (
         <nav className="navbar">
-            <div className='logo'>Webling</div>
+            <div className='logo-sec'><img className='logo' src={Logo} /></div>
             <ul className='icon-list'>
                 <li><img className='icons' src={friend} alt='icon1' onClick={() => setChatType("friend-chat")} /></li>
                 <li><img className='icons' src={group} alt='icon2' onClick={() => setChatType("group-chat")} /></li>

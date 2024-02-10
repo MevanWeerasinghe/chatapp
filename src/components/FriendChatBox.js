@@ -2,8 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import { addDoc, collection, serverTimestamp, onSnapshot, query, where, orderBy, getDocs, updateDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import "../styles/Chat.css";
+import backIcon from '../icon/icons8-double-left-64.png';
 
-const FriendChatBox = ({currentFriend}) => {
+const FriendChatBox = ({currentFriend, setShowChat}) => {
 
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
@@ -99,6 +100,9 @@ const FriendChatBox = ({currentFriend}) => {
     return (
         <div className="message-section">
             <div className="room-header">
+                {window.innerWidth < 767 && <div className="back-button">
+                    <img className='back-icons' src={backIcon} alt="back" onClick={() => setShowChat(false)}/>
+                </div>}
                 <p className="room-name">{currentFriend.name}</p>
             </div>
             <div className="messages" style={messages.length === 0 ? noMessagesStyle : {}}>

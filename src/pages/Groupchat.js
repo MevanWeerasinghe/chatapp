@@ -4,7 +4,7 @@ import JoinGroupChat from '../components/JoinGroupChat';
 import { useState, useRef, useEffect} from 'react';
 import Groups from '../components/Groups';
 
-const Groupchat = ({room, setRoom}) => {
+const Groupchat = ({room, setRoom, setShowChat}) => {
 
     const [createGroupClicked, setCreateGroupClicked] = useState(false)
     const [joinGroupClicked, setJoinGroupClicked] = useState(false)
@@ -46,8 +46,9 @@ const Groupchat = ({room, setRoom}) => {
                     <div className='labels'>Join a Group Chat</div>
                     {joinGroupClicked && <JoinGroupChat setRoom={setRoom} />}
                 </div>
+                <h1 className="joined-group-label">Joined Groups</h1>
             </div>
-            <Groups room={room} setRoom={setRoom} />
+            <Groups room={room} setRoom={setRoom} setShowChat={setShowChat} />
         </div>
     )
 }

@@ -2,8 +2,9 @@ import { useEffect, useState, useRef } from "react";
 import { addDoc, collection, serverTimestamp, onSnapshot, query, where, orderBy } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import "../styles/Chat.css";
+import backIcon from '../icon/icons8-double-left-64.png';
 
-const GroupChatBox = ({room, setRoom}) => {
+const GroupChatBox = ({room, setRoom, setShowChat}) => {
     const [message, setMessage] = useState("");
     const [messages, setMessages] = useState([]);
 
@@ -66,8 +67,10 @@ const GroupChatBox = ({room, setRoom}) => {
     return (
         <div className="message-section">
             <div className="room-header">
+                {window.innerWidth < 767 && <div className="back-button">
+                    <img className='back-icons' src={backIcon} alt="back" onClick={() => setShowChat(false)}/>
+                </div>}
                 <p className="room-name">Welcome to {room}</p>
-                <button className="leave-button" onClick={() => setRoom(null)}>Leave room</button>
             </div>
             <div className="messages" style={messages.length === 0 ? noMessagesStyle : {}}>
                 {messages.length === 0 && <p>There are no messages yet</p>}

@@ -7,15 +7,6 @@
     gap: 5px;
 }
 
-.joined-group-label {
-    font-size: 14px;
-    padding: 0;
-    background-color: transparent;
-    color: #b5d5f7;
-    margin-bottom: 0;
-    margin: 10px 15px 10px 15px;
-}
-
 .group {
     display: flex;
     align-items: center;

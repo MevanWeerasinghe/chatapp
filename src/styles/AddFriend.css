@@ -3,11 +3,14 @@
     flex-direction: column;
     justify-content: flex-start;
     height: 100vh;
+    position: relative;
+    z-index: 1;
 }
 
 .add-friend-sec {
     background-color: #015cbe;
     position: sticky;
+    z-index: 2;
     top: 60px;
 }
 

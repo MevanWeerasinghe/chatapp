@@ -3,7 +3,7 @@ import { collection, onSnapshot, query, where } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { auth, db } from "../firebase-config";
 
-const Groups = ({room, setRoom}) => {
+const Groups = ({room, setRoom, setShowChat}) => {
 
     const [selectedGroup, setSelectedGroup] = useState(null);
     const [groups, setGroups] = useState([]);
@@ -27,6 +27,10 @@ const Groups = ({room, setRoom}) => {
         const handleGroupClick = () => {
             setRoom(group.room)
             setSelectedGroup(group.room)
+
+            if (window.innerWidth < 767) {
+                setShowChat(true)
+            }
         }
 
         return (
@@ -43,7 +47,7 @@ const Groups = ({room, setRoom}) => {
 
     return (
         <div className="groups">
-            <h1 className="joined-group-label">Joined Groups</h1>
+            
             {oldGroups}
         </div>
     );

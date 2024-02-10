@@ -11,6 +11,8 @@
   min-width: 400px;
   height: 100vh;
   overflow-y: auto;
+  position: relative;
+  z-index: 1;
 }
 
 .chat-room {
@@ -31,6 +33,12 @@
 margin: 20px;
 }
 
+/* Mobile view */
+@media only screen and (max-width: 767px) {
 
+  .chat-room {
+    width: 100%;
+  }
+}
 
 

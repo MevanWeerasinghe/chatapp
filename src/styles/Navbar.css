@@ -7,6 +7,19 @@
     background-color: #003c70;
     position: sticky;
     top: 0;
+    z-index: 3;
+}
+
+.logo-sec {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+.logo {
+    height: 30px;
+    margin: 0 10px 0 10px;
 }
 
 .icon-list {

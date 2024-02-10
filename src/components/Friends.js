@@ -4,7 +4,7 @@ import { collection, onSnapshot, query, where, getDocs, doc, updateDoc,deleteDoc
 import { auth, db } from "../firebase-config";
 import SearchFriend from "./SearchFriend";
 
-const Friends = ({setCurrentFriend, isClicked}) => {
+const Friends = ({setCurrentFriend, isClicked, setShowChat}) => {
 
     const friendsRef = collection(db, "friends");
     const userRef = collection(db, "users"); 
@@ -73,6 +73,10 @@ const Friends = ({setCurrentFriend, isClicked}) => {
         const handleFriendClick = () => {
             setCurrentFriend(friend);
             setSelectedFriend(friend.id);
+
+            if (window.innerWidth < 767) {
+                setShowChat(true);
+            }
 
             // update the last message to seen
             const friendDocRef = doc(db, "friends", friend.id); // create a reference to the document

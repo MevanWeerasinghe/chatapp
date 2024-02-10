@@ -5,12 +5,15 @@
     align-items: center;
     margin-top: 5px;
     width: 100%;
+    border: 1px solid #d3e6fa;
+    border-radius: 5px;
+    padding: 0 10px 10px 10px; 
 }
 
 .create-room-label, .join-room-label {
     color: #d3e6fa;
     font-size: 15px;
-    margin: 0;
+    margin: 5px;
 }
 
 .create-room, .join-room {
@@ -20,7 +23,6 @@
     align-items: center;
     width: 100%;
     height: auto;
-    margin: 10px;
 }
 
 .room-name-input {

@@ -6,6 +6,8 @@
     background-color: #0985F7;
     width: 100%;
     flex-grow: 1;
+    position: relative;
+    z-index: 1;
 }
 
 .friend-list {
