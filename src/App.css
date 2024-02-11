@@ -6,9 +6,26 @@
   /* justify-content: space-between; */
 }
 
+.AppMobile {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  height: 100vh;
+}
+
+.signin-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  background: linear-gradient(to right,#52acfa, #195994, #01213e);
+}
+
 .menu {
   width: 35%;
-  min-width: 400px;
+  min-width: 430px;
   height: 100vh;
   overflow-y: auto;
   position: relative;

@@ -93,6 +93,10 @@
     background-color: transparent;
     color: #d2e8ff;
     margin-top: 4px;
+    width: 250px;
+    overflow: hidden;
+    white-space: nowrap;
+    height: 1.2em;
 }
 
 .friend-lastMessage-time {

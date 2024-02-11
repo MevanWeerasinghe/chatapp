@@ -1,12 +1,13 @@
 import "../styles/Friends.css";
 import { useEffect, useState} from "react";
-import { collection, onSnapshot, query, where, getDocs, doc, updateDoc,deleteDoc } from "firebase/firestore";
+import { collection, onSnapshot, query, where, getDocs, doc, updateDoc, deleteDoc } from "firebase/firestore";
 import { auth, db } from "../firebase-config";
 import SearchFriend from "./SearchFriend";
 
 const Friends = ({setCurrentFriend, isClicked, setShowChat}) => {
 
     const friendsRef = collection(db, "friends");
+    const currentFriendsRef = collection(db, "currentFriends");
     const userRef = collection(db, "users"); 
 
     const [friends, setFriends] = useState([]);
@@ -78,16 +79,25 @@ const Friends = ({setCurrentFriend, isClicked, setShowChat}) => {
                 setShowChat(true);
             }
 
+            console.log(friend.friendEmail);
             // update the last message to seen
             const friendDocRef = doc(db, "friends", friend.id); // create a reference to the document
             updateDoc(friendDocRef, {
                 lastMessage: {
-                    text: friend.lastMessage.text,
-                    createdAt: friend.lastMessage.createdAt,
-                    sender: friend.lastMessage.sender,
+                    ...friend.lastMessage,
                     seen: true
                 }
             });
+
+            const querycurrentFriends = query(currentFriendsRef, where("email", "==", auth.currentUser.email));
+            getDocs(querycurrentFriends).then((querySnapshot) => {
+                querySnapshot.forEach((document) => {
+                    const currentFriendRef = doc(db, "currentFriends", document.id);
+                    updateDoc(currentFriendRef, {
+                        friend: friend.friendEmail
+                    })
+                })
+            })
         }
 
         const handleAccept = async () => {

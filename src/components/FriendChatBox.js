@@ -10,11 +10,13 @@ const FriendChatBox = ({currentFriend, setShowChat}) => {
     const [messages, setMessages] = useState([]);
 
     const messagesRef = collection(db, "friendMessages");
+    const currentFriendsRef = collection(db, "currentFriends");
     const friendRef = collection(db, "friends");
     const dummyDiv = useRef(null);
 
     useEffect(() => {
         if (currentFriend.friendEmail && auth.currentUser.email) {
+            // Query the messages collection for documents where the sender and reciever fields contain the current user's email and the friend's email
             const queryMessage = query(messagesRef, 
                 where("sender", "in", [auth.currentUser.email, currentFriend.friendEmail]),
                 where("reciever", "in", [auth.currentUser.email, currentFriend.friendEmail]),
@@ -62,6 +64,16 @@ const FriendChatBox = ({currentFriend, setShowChat}) => {
             doc.data().Emails.includes(auth.currentUser.email) && 
             doc.data().Emails.includes(currentFriend.friendEmail)
         )[0];
+
+        const currentFriendQuery = query(currentFriendsRef, where("email", "==", currentFriend.friendEmail));
+        const currentFriendSnapshot = await getDocs(currentFriendQuery);
+
+        let seen;
+        if (auth.currentUser.email === currentFriendSnapshot.docs[0].data().friend) {
+            seen = true;
+        } else {
+            seen = false;
+        }
         
         // Update the last message in the friends collection
         const friendDocRef = doc(db, "friends", friendDoc.id);
@@ -70,7 +82,7 @@ const FriendChatBox = ({currentFriend, setShowChat}) => {
                 text: message,
                 createdAt: serverTimestamp(),
                 sender: auth.currentUser.email,
-                seen: false
+                seen: seen
             }
         });
 

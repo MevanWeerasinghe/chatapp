@@ -44,10 +44,11 @@ function App() {
   if (!isAuth) {
     return (
       <div className="App">
-        Welocome to chat app
-        <Auth 
-          setIsAuth={setIsAuth}
-        />
+        <div className='signin-page'>
+          <Auth 
+            setIsAuth={setIsAuth}
+          />
+        </div>
       </div>
     );
   }

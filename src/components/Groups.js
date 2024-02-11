@@ -46,8 +46,7 @@ const Groups = ({room, setRoom, setShowChat}) => {
     })
 
     return (
-        <div className="groups">
-            
+        <div className="groups">          
             {oldGroups}
         </div>
     );
